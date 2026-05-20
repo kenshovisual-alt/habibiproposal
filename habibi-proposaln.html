@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HABIBI Marrakech — Digital Growth Blueprint 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+
+:root{
+  --bg:#C9D5DF;         /* clearly different from white */
+  --white:#FFFFFF;
+  --terra:#C4622D;
+  --tl:#FAEEE8;
+  --dark:#2D3340;
+  --txt:#18191C;
+  --mid:#5C6475;
+  --soft:#8C95A6;
+  --ln:#BCC8D4;
+  --sh:0 3px 22px rgba(0,0,0,.13),0 1px 5px rgba(0,0,0,.07);
+  --sh2:0 8px 40px rgba(0,0,0,.18),0 2px 10px rgba(0,0,0,.09);
+}
+
+/* ── deck ── */
+#deck{width:100%;height:100%;position:relative;}
+
+/* every slide fills the viewport */
+.slide{
+  position:absolute;inset:0;
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  padding:2.6rem 3.4rem 3rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  transform:translateY(10px);
+  overflow:hidden;
+}
+.slide.on{opacity:1;pointer-events:all;transform:translateY(0);}
+.slide.dk{background:var(--dark);}
+
+/* ── chrome ── */
+#ctr{position:fixed;bottom:1.3rem;right:1.8rem;z-index:900;font-size:.7rem;font-weight:500;letter-spacing:.06em;color:var(--soft);}
+#nav{position:fixed;bottom:1.1rem;left:50%;transform:translateX(-50%);z-index:900;display:flex;align-items:center;gap:.75rem;}
+.nb{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.75rem;color:var(--mid);transition:all .15s;backdrop-filter:blur(4px);}
+.nb:hover{background:#fff;box-shadow:var(--sh);}
+.dots{display:flex;gap:5px;align-items:center;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,.22);cursor:pointer;transition:all .3s ease;}
+.dot.on{width:16px;border-radius:9999px;background:var(--terra);}
+
+/* ── type scale ── */
+/* .ht = huge title on title slides */
+.ht{font-size:clamp(2.4rem,4.2vw,3.4rem);font-weight:500;line-height:1.1;letter-spacing:-.022em;color:var(--txt);}
+.h2{font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:500;line-height:1.15;letter-spacing:-.018em;color:var(--txt);}
+.h3{font-size:.97rem;font-weight:600;color:var(--txt);}
+.body{font-size:.87rem;font-weight:400;line-height:1.65;color:var(--mid);}
+.sm{font-size:.75rem;font-weight:400;color:var(--soft);}
+.tag{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);}
+
+/* white/terra helper */
+.w{color:#fff!important;} .t{color:var(--terra)!important;}
+
+/* ── card ── */
+.c{background:var(--white);border-radius:11px;box-shadow:var(--sh);padding:1.1rem 1.3rem;}
+.ct{background:var(--white);border-radius:11px;box-shadow:var(--sh);border:1.8px solid var(--terra);padding:1.1rem 1.3rem;}
+.cdk{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);border-radius:11px;padding:1.1rem 1.3rem;}
+.cbg{background:rgba(0,0,0,.06);border-radius:11px;padding:1.1rem 1.3rem;}
+
+/* ── checklist ── */
+.chk{list-style:none;display:flex;flex-direction:column;gap:.38rem;}
+.chk li{display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;color:var(--mid);line-height:1.5;}
+.chk li::before{content:'';flex-shrink:0;margin-top:3px;width:12px;height:12px;
+  background-image:url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 6l2.5 2.5 5.5-5' stroke='%23C4622D' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;}
+
+/* ── banners ── */
+.qb{background:var(--white);border-radius:9px;border-left:3.5px solid var(--terra);padding:.82rem 1.2rem;font-size:.87rem;color:var(--mid);box-shadow:var(--sh);}
+.rb{background:var(--terra);border-radius:9px;padding:.82rem 1.5rem;font-size:.87rem;color:#fff;text-align:center;font-weight:500;}
+
+/* ── icon circle ── */
+.ic{width:44px;height:44px;border-radius:50%;background:var(--tl);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ic svg{stroke:var(--terra);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── pill ── */
+.pill{display:inline-flex;align-items:center;background:var(--terra);color:#fff;border-radius:9999px;padding:.18rem .75rem;font-size:.68rem;font-weight:600;letter-spacing:.03em;}
+
+/* ── plan card ── */
+.plan{background:#fff;border-radius:13px;box-shadow:var(--sh);padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:.55rem;}
+.plan.hi{border:2px solid var(--terra);box-shadow:var(--sh2);}
+
+/* ── toggle ── */
+.tog{width:34px;height:18px;border-radius:9999px;background:var(--terra);position:relative;flex-shrink:0;}
+.tog::after{content:'';position:absolute;left:3px;top:2.5px;width:13px;height:13px;border-radius:50%;background:#fff;transform:translateX(16px);}
+.ton{font-size:.54rem;font-weight:700;color:#fff;position:absolute;left:5px;top:3.5px;}
+
+/* ── step circle ── */
+.sc{width:50px;height:50px;border-radius:50%;border:2.5px solid var(--terra);background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:600;color:var(--terra);box-shadow:0 0 0 5px rgba(196,98,45,.09);flex-shrink:0;}
+
+/* ── divider ── */
+.r{height:1px;background:var(--ln);border:none;margin:.45rem 0;}
+
+/* ── animations ── */
+@keyframes up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fi{from{opacity:0;}to{opacity:1;}}
+.slide.on .a1{animation:up .46s .04s both ease;}
+.slide.on .a2{animation:up .46s .1s both ease;}
+.slide.on .a3{animation:up .46s .17s both ease;}
+.slide.on .a4{animation:up .46s .24s both ease;}
+.slide.on .a5{animation:up .46s .31s both ease;}
+.slide.on .a6{animation:up .46s .38s both ease;}
+
+/* ── phone ── */
+.ph{width:100px;border:2.5px solid var(--ln);border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--sh);flex-shrink:0;}
+.ph-top{text-align:center;padding:6px 0 3px;}
+.ph-top span{display:inline-block;width:32px;height:5px;background:var(--ln);border-radius:9999px;}
+.ph-b{height:4px;background:var(--ln);border-radius:3px;margin:.22rem .45rem;}
+.ph-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:.3rem .3rem 0;}
+.ph-c{background:var(--ln);border-radius:2px;aspect-ratio:1;}
+.ph-c.dk{background:#4A5568;}
+.ph-n{display:flex;justify-content:space-around;padding:.35rem;border-top:1px solid var(--ln);margin-top:.22rem;}
+.ph-nd{width:12px;height:12px;border-radius:50%;background:var(--ln);}
+.ph-nd.a{background:var(--terra);}
+
+/* ── iframe wrap ── */
+.ifw{flex:1;border-radius:11px;overflow:hidden;border:1px solid var(--ln);box-shadow:var(--sh2);background:#fff;position:relative;min-height:0;}
+.ifph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;background:#EFF3F7;}
+</style>
+</head>
+<body>
+<div id="ctr">01 / 15</div>
+<div id="deck">
+
+<!-- ════════════════════════ 01 COVER ════════════════════════ -->
+<div class="slide on" id="s1" style="padding:0;display:block;position:absolute;inset:0;background:var(--bg);">
+
+  <!-- topo lines — right side, clearly visible against bg -->
+  <svg style="position:absolute;right:0;top:0;width:56%;height:100%;pointer-events:none;" viewBox="0 0 520 460" preserveAspectRatio="xMidYMid slice">
+    <g fill="none" stroke="#6E8499" stroke-width="1" opacity="0.7">
+      <path d="M0,430 C45,395 100,350 155,295 C210,240 265,208 315,172 C365,136 415,96 452,57 C478,26 495,5 520,0"/>
+      <path d="M-25,430 C22,390 82,342 140,282 C198,222 254,188 304,152 C354,116 407,76 444,38 C468,12 482,-8 505,0"/>
+      <path d="M-50,430 C2,385 65,334 128,271 C188,210 246,170 296,133 C346,96 400,57 437,20 C459,0 471,-14 492,0"/>
+      <path d="M25,430 C65,397 115,360 163,316 C208,274 254,244 300,212 C346,180 393,144 428,108 C454,80 470,54 494,22"/>
+      <path d="M55,430 C90,400 135,367 178,328 C220,291 263,264 308,233 C351,204 396,170 430,138 C454,114 470,90 494,58"/>
+      <path d="M85,430 C115,404 155,374 195,340 C233,307 273,281 316,252 C358,224 400,192 432,162 C455,138 470,116 494,90"/>
+      <path d="M115,430 C140,408 175,381 212,350 C248,320 286,296 326,270 C365,245 404,215 434,186 C456,163 470,143 494,120"/>
+      <path d="M145,430 C167,412 196,388 229,360 C261,333 298,310 336,286 C373,263 409,235 436,208 C457,185 471,166 494,148"/>
+      <path d="M175,430 C194,416 218,395 247,370 C275,346 310,325 346,302 C381,280 414,255 438,230 C458,208 471,190 494,175"/>
+      <path d="M205,430 C221,418 240,400 265,378 C289,356 321,337 355,316 C389,295 419,272 440,250 C459,231 471,215 494,200"/>
+      <!-- crossings -->
+      <path d="M520,390 C492,398 455,402 412,399 C370,396 328,388 284,380 C242,372 200,366 164,362"/>
+      <path d="M520,340 C488,350 447,357 403,354 C360,351 316,342 272,334 C230,326 190,320 156,317"/>
+      <path d="M520,290 C484,302 440,310 395,307 C350,304 304,295 260,287 C218,279 178,274 145,271"/>
+      <path d="M520,240 C480,253 433,262 387,260 C342,257 295,248 252,240 C210,232 172,228 140,226"/>
+    </g>
+  </svg>
+
+  <!-- white card — left panel -->
+  <div class="a1" style="
+    position:absolute;
+    left:3.2rem;top:50%;transform:translateY(-50%);
+    width:44%;max-width:560px;
+    background:#fff;border-radius:16px;
+    box-shadow:var(--sh2);
+    padding:2.8rem 3.2rem;
+  ">
+    <p style="font-size:.6rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--soft);margin-bottom:2rem;">Digital Proposal · 2026</p>
+    <p style="font-size:clamp(3.2rem,6vw,5.5rem);font-weight:300;line-height:.9;letter-spacing:-.025em;color:var(--txt);">HABIBI</p>
+    <p style="font-size:clamp(2rem,3.8vw,3.8rem);font-weight:300;line-height:1;letter-spacing:-.02em;color:var(--txt);margin-bottom:1.2rem;">Marrakech</p>
+    <div style="height:3px;background:var(--terra);border-radius:2px;margin-bottom:1.2rem;"></div>
+    <p style="font-size:clamp(.9rem,1.6vw,1.15rem);font-weight:400;color:var(--mid);line-height:1.55;">The Digital Infrastructure<br>&amp; Growth Blueprint · 2026</p>
+  </div>
+
+  <!-- bottom bar -->
+  <div class="a2" style="position:absolute;bottom:1.4rem;left:3.2rem;right:3.2rem;display:flex;justify-content:space-between;align-items:center;z-index:1;">
+    <p style="font-size:.78rem;color:var(--soft);">Prepared by Kensho Hospitality · <a href="https://hospitality.kenshovisual.com" target="_blank" style="color:var(--terra);text-decoration:none;">hospitality.kenshovisual.com</a></p>
+  </div>
+</div>
+
+<!-- ════════════════════════ 02 THE MARKET ════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="a1" style="margin-bottom:1.2rem;">
+    <h2 class="h2">The Market: A Premier Global Destination</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;flex:1;align-items:stretch;" class="a2">
+    <div class="c" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <p class="sn" data-v="17.4" data-s="M" style="font-size:2.6rem;font-weight:600;color:var(--terra);line-height:1;">17.4M</p>
+      <p style="font-size:.88rem;font-weight:500;color:var(--txt);">Morocco Visitors</p>
+      <p class="sm" style="text-align:center;">2024. +20% YoY, generating $11B in revenue</p>
+    </div>
+    <div class="c" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <p class="sn" data-v="4" data-s="M" style="font-size:2.6rem;font-weight:600;color:var(--terra);line-height:1;">4M</p>
+      <p style="font-size:.88rem;font-weight:500;color:var(--txt);">Marrakech Arrivals</p>
+      <p class="sm" style="text-align:center;">Nearly 12 million overnight stays</p>
+    </div>
+    <div class="c" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      <p class="sn" data-v="72" data-s="%" style="font-size:2.6rem;font-weight:600;color:var(--terra);line-height:1;">72%</p>
+      <p style="font-size:.88rem;font-weight:500;color:var(--txt);">Average Hotel Occupancy</p>
+      <p class="sm" style="text-align:center;">Across the city</p>
+    </div>
+    <div class="c" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.65rem;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <p style="font-size:2.6rem;font-weight:600;color:var(--terra);line-height:1;">#6</p>
+      <p style="font-size:.88rem;font-weight:500;color:var(--txt);">Global Destination</p>
+      <p class="sm" style="text-align:center;">Airbnb Travel Trends, 2024</p>
+    </div>
+  </div>
+  <div class="qb a3" style="margin-top:.85rem;">The government's 2026 strategic target was reached two years early. At 500–1,000+ MAD per cover nightly, the demand for premium dinner show experiences is at an all-time high.</div>
+</div>
+
+<!-- ════════════════════════ 03 COMPETITIVE ARENA ════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="a1" style="margin-bottom:1.1rem;"><h2 class="h2">The Competitive Arena</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:1rem;flex:1;min-height:0;">
+    <div class="cbg a2" style="display:flex;flex-direction:column;gap:.7rem;overflow:hidden;">
+      <p class="h3" style="font-size:1rem;">The Establishment</p>
+      <div style="display:flex;flex-direction:column;gap:.55rem;flex:1;">
+        <div class="c" style="display:flex;gap:.7rem;align-items:flex-start;flex:1;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <div><p class="h3" style="font-size:.88rem;">Dar Soukkar: The Benchmark.</p><p class="body" style="font-size:.82rem;">16th-century palace on Route de l'Ourika. Over 2,700 TripAdvisor reviews. The venue concierges recommend first.</p></div>
+        </div>
+        <div class="c" style="display:flex;gap:.7rem;align-items:flex-start;flex:1;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div><p class="h3" style="font-size:.88rem;">Palais Jad Mahal: 14 Years Established.</p><p class="body" style="font-size:.82rem;">Premium Hivernage palace. Positioned near La Mamounia and Royal Mansour.</p></div>
+        </div>
+        <div class="c" style="display:flex;gap:.7rem;align-items:flex-start;flex:1;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/></svg>
+          <div><p class="h3" style="font-size:.88rem;">Bo Zin: 20 Years Iconic.</p><p class="body" style="font-size:.82rem;">Route de l'Ourika. 500 capacity. Exotic garden. Most fashionable venue in Morocco.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="ct a3" style="display:flex;flex-direction:column;gap:.85rem;">
+      <h3 style="font-size:1.6rem;font-weight:500;color:var(--terra);line-height:1.2;">The Challenger —<br>HABIBI August 2026</h3>
+      <ul class="chk">
+        <li>Rooftop with Atlas views.</li><li>250 covers.</li>
+        <li>20+ artists &amp; live shows.</li><li>Kat as artistic director.</li>
+        <li>International positioning.</li><li>Exceptional concept.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="qb a4" style="margin-top:.8rem;">Competitors have decades of established digital presence. To compete, HABIBI must enter the market at the exact same level of digital authority from Day One.</div>
+</div>
+
+<!-- ════════════════════════ 04 5-PILLAR ENGINE ════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="a1" style="margin-bottom:1.2rem;"><h2 class="h2">The 5-Pillar Digital Engine</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1.7fr;gap:1.5rem;flex:1;align-items:center;">
+    <div class="a2" style="display:flex;flex-direction:column;gap:.85rem;">
+      <p class="body" style="font-size:.92rem;">An integrated digital ecosystem built to scale and automate a modern hospitality brand — so the HABIBI team can focus purely on the guest experience.</p>
+      <div style="display:flex;flex-direction:column;gap:.42rem;">
+        <div style="display:flex;gap:.7rem;align-items:center;background:#fff;border-radius:9px;padding:.65rem 1rem;box-shadow:var(--sh);">
+          <div style="width:7px;height:7px;border-radius:50%;background:var(--terra);flex-shrink:0;"></div>
+          <p style="font-size:.87rem;"><strong>Planning:</strong> <span style="color:var(--mid);">The terrain &amp; strategy.</span></p>
+        </div>
+        <div style="display:flex;gap:.7rem;align-items:center;background:#fff;border-radius:9px;padding:.65rem 1rem;box-shadow:var(--sh);">
+          <div style="width:7px;height:7px;border-radius:50%;background:var(--terra);flex-shrink:0;"></div>
+          <p style="font-size:.87rem;"><strong>Development:</strong> <span style="color:var(--mid);">Websites &amp; internal apps.</span></p>
+        </div>
+        <div style="display:flex;gap:.7rem;align-items:center;background:#fff;border-radius:9px;padding:.65rem 1rem;box-shadow:var(--sh);">
+          <div style="width:7px;height:7px;border-radius:50%;background:var(--terra);flex-shrink:0;"></div>
+          <p style="font-size:.87rem;"><strong>Visibility:</strong> <span style="color:var(--mid);">SEO, AI search &amp; Google.</span></p>
+        </div>
+        <div style="display:flex;gap:.7rem;align-items:center;background:#fff;border-radius:9px;padding:.65rem 1rem;box-shadow:var(--sh);">
+          <div style="width:7px;height:7px;border-radius:50%;background:var(--terra);flex-shrink:0;"></div>
+          <p style="font-size:.87rem;"><strong>Growth:</strong> <span style="color:var(--mid);">Social &amp; community management.</span></p>
+        </div>
+        <div style="display:flex;gap:.7rem;align-items:center;background:#fff;border-radius:9px;padding:.65rem 1rem;box-shadow:var(--sh);">
+          <div style="width:7px;height:7px;border-radius:50%;background:var(--terra);flex-shrink:0;"></div>
+          <p style="font-size:.87rem;"><strong>Comm &amp; Sales:</strong> <span style="color:var(--mid);">Automated booking &amp; outreach.</span></p>
+        </div>
+      </div>
+    </div>
+    <!-- Ring diagram — fills the right column -->
+    <div class="a3" style="display:flex;align-items:center;justify-content:center;height:100%;">
+      <div style="position:relative;width:min(420px,100%);height:min(320px,100%);">
+        <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 420 320">
+          <circle cx="210" cy="160" r="105" fill="none" stroke="var(--terra)" stroke-width="2.5" stroke-dasharray="8 5" opacity="0.45"/>
+          <circle cx="210" cy="160" r="38" fill="none" stroke="var(--terra)" stroke-width="1.5" opacity="0.3"/>
+        </svg>
+        <!-- center -->
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:var(--tl);border:1.8px solid var(--terra);display:flex;align-items:center;justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </div>
+        <!-- nodes around ring -->
+        <div style="position:absolute;top:2px;left:50%;transform:translateX(-50%);text-align:center;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:var(--sh);border:1.5px solid var(--ln);display:flex;align-items:center;justify-content:center;margin:0 auto .28rem;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg></div>
+          <p style="font-size:.63rem;font-weight:600;white-space:nowrap;">Planning</p>
+        </div>
+        <div style="position:absolute;right:2px;top:50%;transform:translateY(-50%);text-align:center;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:var(--sh);border:1.5px solid var(--ln);display:flex;align-items:center;justify-content:center;margin:0 auto .28rem;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg></div>
+          <p style="font-size:.63rem;font-weight:600;white-space:nowrap;">Dev</p>
+        </div>
+        <div style="position:absolute;bottom:2px;right:52px;text-align:center;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:var(--sh);border:1.5px solid var(--ln);display:flex;align-items:center;justify-content:center;margin:0 auto .28rem;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <p style="font-size:.63rem;font-weight:600;white-space:nowrap;">Visibility</p>
+        </div>
+        <div style="position:absolute;bottom:2px;left:52px;text-align:center;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:var(--sh);border:1.5px solid var(--ln);display:flex;align-items:center;justify-content:center;margin:0 auto .28rem;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+          <p style="font-size:.63rem;font-weight:600;white-space:nowrap;">Growth</p>
+        </div>
+        <div style="position:absolute;left:2px;top:50%;transform:translateY(-50%);text-align:center;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#fff;box-shadow:var(--sh);border:1.5px solid var(--ln);display:flex;align-items:center;justify-content:center;margin:0 auto .28rem;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <p style="font-size:.63rem;font-weight:600;white-space:nowrap;">Comm</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 05 WEBSITE PROTOTYPE ════════════════════════ -->
+<div class="slide dk" id="s5" style="padding:2rem 2.4rem;">
+  <div class="a1" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+    <div>
+      <p class="tag" style="color:rgba(255,255,255,.4);margin-bottom:.2rem;">Development · Website Prototype</p>
+      <h2 style="font-size:clamp(1.3rem,2.3vw,1.9rem);font-weight:500;color:#fff;line-height:1.15;">Building the Digital Flagship</h2>
+    </div>
+    <div style="display:flex;gap:1rem;">
+      <div class="cdk" style="padding:.6rem 1rem;text-align:center;min-width:105px;">
+        <p style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.18rem;">Phase 1</p>
+        <p style="font-size:.95rem;font-weight:500;color:#fff;">2,300€</p>
+        <p style="font-size:.68rem;color:rgba(255,255,255,.38);">EN + FR · 9 pages</p>
+      </div>
+      <div class="cdk" style="padding:.6rem 1rem;text-align:center;min-width:105px;">
+        <p style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.18rem;">Phase 2</p>
+        <p style="font-size:.95rem;font-weight:500;color:#fff;">from 500€</p>
+        <p style="font-size:.68rem;color:rgba(255,255,255,.38);">E-commerce · Blog</p>
+      </div>
+    </div>
+  </div>
+  <!-- iframe — takes all remaining space -->
+  <div class="ifw a2">
+    <!--
+      ╔══════════════════════════════════════════╗
+      ║ OPEN VIA VS CODE LIVE SERVER             ║
+      ║ Right-click habibi-proposal.html         ║
+      ║ → "Open with Live Server"                ║
+      ║ Then the website appears here.           ║
+      ║ Both files must be in the same folder.   ║
+      ╚══════════════════════════════════════════╝
+    -->
+    <iframe
+      src="./index.html"
+      style="width:100%;height:100%;border:none;display:block;"
+      scrolling="yes"
+      title="HABIBI Website Prototype"
+    ></iframe>
+  </div>
+</div>
+
+<!-- ════════════════════════ 06 REVENUE & SERVICE ════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="a1" style="margin-bottom:1.1rem;"><h2 class="h2">Expanding Revenue &amp; Standardizing Service</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;flex:1;min-height:0;">
+    <div class="c a2" style="display:flex;flex-direction:column;gap:.7rem;">
+      <div style="display:flex;align-items:center;gap:.75rem;">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+        <h3 class="h3">E-Commerce &amp; Gift Cards <span style="font-weight:400;color:var(--soft);">(Website Phase 2)</span></h3>
+      </div>
+      <p class="body">Guests buy experiences as gifts, generating revenue while the team is hosting, not computing.</p>
+      <ul class="chk"><li>Automated email delivery</li><li>Branded merchandise</li><li>Signature spices</li><li>Secure payment</li></ul>
+      <div class="qb" style="margin-top:auto;">A guest who buys a gift card introduces <strong>two more people</strong> to HABIBI.</div>
+    </div>
+    <div class="c a3" style="display:flex;flex-direction:column;gap:.7rem;">
+      <div style="display:flex;align-items:center;gap:.75rem;">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <h3 class="h3">Staff Training App</h3>
+      </div>
+      <p class="body">Put HABIBI standards in every pair of hands from Day One.</p>
+      <ul class="chk"><li>SOPs &amp; menu knowledge</li><li>Interactive floor maps</li><li>Upselling sales scripts</li><li>Manager progress dashboards</li></ul>
+      <div class="qb" style="margin-top:auto;">A waiter who knows how to upsell a champagne pairing is worth more than any ad campaign.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 07 VISIBILITY ════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="a1" style="margin-bottom:.5rem;">
+    <p class="tag" style="margin-bottom:.3rem;">Visibility</p>
+    <h2 class="h2" style="margin-bottom:.3rem;">Dominating the Search Layer</h2>
+    <p class="body">If guests can't find you, they choose someone else.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:1.5rem;flex:1;align-items:center;">
+    <div class="a2" style="display:flex;flex-direction:column;gap:.4rem;">
+      <!-- GBP layer -->
+      <div class="c" style="display:flex;align-items:center;gap:.85rem;transform:perspective(450px) rotateX(3.5deg) translateY(6px);z-index:3;position:relative;">
+        <div class="ic" style="width:40px;height:40px;"><svg width="17" height="17" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><p class="h3" style="font-size:.9rem;">Local Search — Google Business Profile</p><p class="sm">Ultimate trust signal for concierges. Fully optimized, continually updated.</p></div>
+      </div>
+      <!-- GEO layer highlighted -->
+      <div style="background:var(--terra);border-radius:11px;padding:.95rem 1.2rem;display:flex;align-items:center;gap:.85rem;box-shadow:var(--sh2);transform:perspective(450px) rotateX(3.5deg);z-index:2;position:relative;">
+        <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <div><p style="font-size:.9rem;font-weight:600;color:#fff;">GEO — Generative Engine Optimisation</p><p style="font-size:.8rem;color:rgba(255,255,255,.78);">HABIBI recommended by ChatGPT, Gemini &amp; Perplexity.</p></div>
+      </div>
+      <!-- SEO layer -->
+      <div class="c" style="display:flex;align-items:center;gap:.85rem;transform:perspective(450px) rotateX(3.5deg) translateY(-6px);z-index:1;position:relative;">
+        <div class="ic" style="width:40px;height:40px;"><svg width="17" height="17" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div><p class="h3" style="font-size:.9rem;">SEO — Search Engine Optimisation</p><p class="sm">Built into page structure from day one. Keywords around premium dinner shows Marrakech.</p></div>
+      </div>
+    </div>
+    <div class="a3" style="display:flex;flex-direction:column;gap:1rem;">
+      <div><p style="font-size:.88rem;font-weight:600;color:var(--terra);margin-bottom:.28rem;">→ Google Business Profile</p><p class="body">Fully optimized profile, continually updated photos, active Q&amp;A management.</p></div>
+      <div><p style="font-size:.88rem;font-weight:600;color:var(--terra);margin-bottom:.28rem;">→ AI Search</p><p class="body">Structured data ensuring HABIBI is the venue recommended by AI tools. A massive new channel most venues ignore.</p></div>
+      <div><p style="font-size:.88rem;font-weight:600;color:var(--terra);margin-bottom:.28rem;">→ Search Engine</p><p class="body">Built into page structure from day one. Keywords optimized around premium dinner shows Marrakech.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 08 REVIEWS ════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="a1" style="margin-bottom:1.1rem;"><h2 class="h2">Reviews as Business Intelligence</h2></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;flex:1;align-items:stretch;" class="a2">
+    <div class="c" style="display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <p class="h3">1. Monitor</p>
+      <p class="body" style="font-size:.83rem;">Continuous tracking of all Google Business Profile reviews.</p>
+    </div>
+    <div class="c" style="display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><polyline points="9 11 12 14 22 4"/></svg></div>
+      <p class="h3">2. Respond</p>
+      <p class="body" style="font-size:.83rem;">100% of reviews answered in a bespoke HABIBI voice — never templated.</p>
+    </div>
+    <div class="c" style="display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+      <p class="h3">3. Alert</p>
+      <p class="body" style="font-size:.83rem;">1 or 2-star reviews trigger an instant automated email alert to the manager.</p>
+    </div>
+    <div class="c" style="display:flex;flex-direction:column;align-items:center;gap:.65rem;text-align:center;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+      <p class="h3">4. Analyze</p>
+      <p class="body" style="font-size:.83rem;">Monthly reports flag staff mentions, detect recurring themes, benchmark against competitors.</p>
+    </div>
+  </div>
+  <div class="qb a3" style="margin-top:.85rem;">The insights go directly to management, so decisions on training and service are driven by real guest data.</div>
+</div>
+
+<!-- ════════════════════════ 09 SOCIAL MEDIA ════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="a1" style="margin-bottom:1rem;"><h2 class="h2">Social Media &amp; Community Cultivation</h2></div>
+  <div style="display:grid;grid-template-columns:1fr auto auto;gap:1rem;flex:1;align-items:start;min-height:0;">
+    <div class="c a2" style="display:flex;flex-direction:column;gap:.6rem;overflow:auto;">
+      <div style="display:flex;align-items:center;gap:.65rem;"><div class="tog"><span class="ton">ON</span></div><div class="ic" style="width:26px;height:26px;"><svg width="12" height="12" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><p class="h3" style="font-size:.84rem;">Strategy, content planning &amp; calendar management</p></div>
+      <div style="height:1px;background:var(--ln);"></div>
+      <div style="display:flex;align-items:center;gap:.65rem;"><div class="tog"><span class="ton">ON</span></div><div class="ic" style="width:26px;height:26px;"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div><p class="h3" style="font-size:.84rem;">High-end copywriting and storytelling</p></div>
+      <div style="height:1px;background:var(--ln);"></div>
+      <div style="display:flex;align-items:center;gap:.65rem;"><div class="tog"><span class="ton">ON</span></div><div class="ic" style="width:26px;height:26px;"><svg width="12" height="12" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><p class="h3" style="font-size:.84rem;">Graphic design for Posts, Stories &amp; Carousels</p></div>
+      <div style="height:1px;background:var(--ln);"></div>
+      <div style="display:flex;align-items:center;gap:.65rem;"><div class="tog"><span class="ton">ON</span></div><div class="ic" style="width:26px;height:26px;"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><p class="h3" style="font-size:.84rem;">End-to-end community management (TikTok &amp; Instagram)</p></div>
+      <div style="height:1px;background:var(--ln);"></div>
+      <div style="display:flex;align-items:center;gap:.65rem;"><div class="tog"><span class="ton">ON</span></div><div class="ic" style="width:26px;height:26px;"><svg width="12" height="12" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><p class="h3" style="font-size:.84rem;">Comment moderation and rapid replies</p></div>
+    </div>
+    <div class="a3" style="display:flex;flex-direction:column;gap:.7rem;width:175px;">
+      <div style="background:var(--terra);border-radius:7px;padding:.28rem .72rem;width:fit-content;"><p style="font-size:.73rem;font-weight:600;color:#fff;">Why it matters:</p></div>
+      <p class="body" style="font-size:.84rem;">An inconsistent social presence signals to guests that nobody is minding the brand.</p>
+      <p class="body" style="font-size:.84rem;">Weekly, high-quality activity builds trust before the booking.</p>
+    </div>
+    <div class="a4 ph" style="height:220px;">
+      <div class="ph-top"><span></span></div>
+      <div style="padding:0 .45rem;">
+        <div style="display:flex;align-items:center;gap:.35rem;padding:.25rem 0;"><div style="width:18px;height:18px;border-radius:50%;background:var(--ln);flex-shrink:0;"></div><div style="flex:1;"><div class="ph-b" style="margin:0 0 2px;width:55%;height:3px;"></div><div class="ph-b" style="margin:0;width:38%;height:3px;"></div></div></div>
+        <div style="display:flex;gap:6px;justify-content:space-around;padding:.12rem 0 .25rem;"><p style="font-size:.48rem;color:var(--soft);">2.3M<br><b style="color:var(--txt);">Followers</b></p><p style="font-size:.48rem;color:var(--soft);">8<br><b style="color:var(--txt);">Posts</b></p></div>
+        <div class="ph-g"><div class="ph-c"></div><div class="ph-c dk"></div><div class="ph-c"></div><div class="ph-c dk"></div><div class="ph-c"></div><div class="ph-c dk"></div><div class="ph-c"></div><div class="ph-c dk"></div><div class="ph-c"></div></div>
+      </div>
+      <div class="ph-n"><div class="ph-nd"></div><div class="ph-nd"></div><div class="ph-nd"></div><div class="ph-nd a"></div><div class="ph-nd"></div></div>
+    </div>
+  </div>
+  <div class="qb a5" style="margin-top:.8rem;">"A guest who discovers HABIBI on social media feels an immediate and overwhelming desire to experience it in person."</div>
+</div>
+
+<!-- ════════════════════════ 10 THREE CHANNELS ════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="a1" style="margin-bottom:1.1rem;"><h2 class="h2">Three Channels That Convert Interest into Reservations</h2></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;flex:1;min-height:0;">
+    <div class="c a2" style="display:flex;flex-direction:column;gap:.65rem;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+      <h3 class="h3">01 — WhatsApp Concierge</h3>
+      <p class="body">Instant replies in English, French, Spanish, and Arabic. 24/7 coverage. Upsells champagne, private dining, and extras. Human-supervised at all times.</p>
+    </div>
+    <div class="c a3" style="display:flex;flex-direction:column;gap:.65rem;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <h3 class="h3">02 — Social Automation</h3>
+      <p class="body">Keyword-triggered conversation flows inside Instagram DMs. Runs 24/7 without staff involvement. Routes inquiries directly to the booking flow.</p>
+    </div>
+    <div class="c a4" style="display:flex;flex-direction:column;gap:.65rem;">
+      <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <h3 class="h3">03 — Outreach &amp; Partnerships</h3>
+      <p class="body">Handled via communication@habibi-marrakech.com. Direct pitching to hotel concierges, travel agencies, and tour operators. End-to-end influencer management.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 11 DM FLOW ════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="a1" style="margin-bottom:1rem;"><h2 class="h2">Every Direct Message is an Open Door</h2></div>
+  <div style="display:grid;grid-template-columns:auto 1fr;gap:1.1rem;flex:1;align-items:center;">
+    <div class="c a2" style="max-width:158px;display:flex;flex-direction:column;gap:.6rem;">
+      <div class="ic" style="width:34px;height:34px;"><svg width="15" height="15" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+      <p class="body" style="font-size:.82rem;font-weight:500;color:var(--txt);">Guest messages HABIBI Instagram at 9:00 PM on a Saturday — table of 12.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.7rem;">
+      <!-- without -->
+      <div class="a3" style="display:flex;align-items:center;gap:.55rem;">
+        <p class="sm" style="white-space:nowrap;min-width:100px;">Without Automation</p>
+        <div style="height:1px;flex:1;background:var(--ln);"></div>
+        <div class="c" style="padding:.55rem .8rem;min-width:100px;text-align:center;font-size:.77rem;color:var(--mid);">Message waits in inbox</div>
+        <span style="color:var(--soft);font-size:.9rem;">→</span>
+        <div class="c" style="padding:.55rem .8rem;min-width:100px;text-align:center;font-size:.77rem;color:var(--mid);">No reply for hours</div>
+        <span style="color:var(--soft);font-size:.9rem;">→</span>
+        <div style="background:#FEF0F0;border:1.5px solid #F28B82;border-radius:9px;padding:.55rem .8rem;min-width:128px;text-align:center;font-size:.77rem;color:#C62828;font-weight:600;">Guest books elsewhere Sunday. Revenue Lost.</div>
+      </div>
+      <!-- with -->
+      <div class="a4" style="display:flex;align-items:center;gap:.55rem;">
+        <p class="sm" style="white-space:nowrap;min-width:100px;color:var(--terra);">With Kensho</p>
+        <div style="height:1px;flex:1;background:var(--terra);opacity:.3;"></div>
+        <div class="c" style="padding:.55rem .8rem;min-width:100px;text-align:center;border:1.5px solid var(--terra);"><p style="font-size:.62rem;font-weight:700;color:var(--terra);margin-bottom:.12rem;">B1</p><p style="font-size:.77rem;color:var(--mid);">Instant AI qualification</p></div>
+        <span style="color:var(--terra);font-size:.9rem;">→</span>
+        <div class="c" style="padding:.55rem .8rem;min-width:100px;text-align:center;border:1.5px solid var(--terra);"><p style="font-size:.62rem;font-weight:700;color:var(--terra);margin-bottom:.12rem;">B2</p><p style="font-size:.77rem;color:var(--mid);">Replies in guest's language</p></div>
+        <span style="color:var(--terra);font-size:.9rem;">→</span>
+        <div class="c" style="padding:.55rem .8rem;min-width:100px;text-align:center;border:1.5px solid var(--terra);"><p style="font-size:.62rem;font-weight:700;color:var(--terra);margin-bottom:.12rem;">B3</p><p style="font-size:.77rem;color:var(--mid);">Links to booking</p></div>
+        <span style="color:var(--terra);font-size:.9rem;">→</span>
+        <div style="background:#F0FEF4;border:1.5px solid #4CAF50;border-radius:9px;padding:.55rem .8rem;min-width:128px;text-align:center;font-size:.77rem;color:#2E7D32;font-weight:600;">Reservation 9:01 PM. Revenue Captured.</div>
+      </div>
+    </div>
+  </div>
+  <div class="rb a5" style="margin-top:.8rem;">The system is trained in sales. No inquiry is ever left waiting.</div>
+</div>
+
+<!-- ════════════════════════ 12 INVESTMENT ════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="a1" style="margin-bottom:.6rem;">
+    <h2 class="h2">Phase 1 Investment Architecture</h2>
+    <p class="body" style="margin-top:.25rem;">One-time strategic and developmental setups.</p>
+  </div>
+  <div class="c a2" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;">
+    <div>
+      <p class="h3" style="margin-bottom:.5rem;">Core Deliverables</p>
+      <div class="r"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;"><p class="body">Marketing Plan <span style="color:var(--soft);">(Competitor, market, and SEO analysis. Recommended first step.)</span></p><p style="font-size:1.15rem;font-weight:600;color:var(--txt);white-space:nowrap;padding-left:1.5rem;">290€</p></div>
+      <div class="r"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;"><p class="body">Website Phase 1 <span style="color:var(--soft);">(Full custom build, English &amp; French included. Mobile-first booking engine.)</span></p><p style="font-size:1.15rem;font-weight:600;color:var(--txt);white-space:nowrap;padding-left:1.5rem;">2,300€</p></div>
+      <div class="r"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;"><p class="body">Hosting &amp; Maintenance <span style="color:var(--soft);">(Billed annually. Includes 1TB bandwidth and backups.)</span></p><p style="font-size:1.15rem;font-weight:600;color:var(--txt);white-space:nowrap;padding-left:1.5rem;">45€ / month</p></div>
+    </div>
+    <div>
+      <div class="r" style="margin:1rem 0 .6rem;"></div>
+      <p class="h3" style="margin-bottom:.5rem;">Optional Capabilities</p>
+      <div class="r"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.48rem 0;"><p class="body">Website Phase 2 (E-Commerce, blog, press, artist agenda)</p><p style="font-size:1.05rem;font-weight:600;color:var(--terra);white-space:nowrap;padding-left:1.5rem;">from 500€</p></div>
+      <div class="r"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.48rem 0;"><p class="body">Staff Training App</p><p style="font-size:1.05rem;font-weight:600;color:var(--terra);white-space:nowrap;padding-left:1.5rem;">from 1,500€</p></div>
+      <div class="r"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:.48rem 0;"><p class="body">Launch Communication Plan</p><p style="font-size:1.05rem;font-weight:600;color:var(--terra);white-space:nowrap;padding-left:1.5rem;">from 450€</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 13 MONTHLY PLANS ════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="a1" style="text-align:center;margin-bottom:1rem;">
+    <h2 class="h2">Monthly Partnership Matrix</h2>
+    <p class="body" style="margin-top:.25rem;">Your dedicated marketing team for less than the cost of one employee.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:1rem;flex:1;align-items:stretch;">
+    <div class="plan a2">
+      <p class="h3">Visibility</p>
+      <p class="sm">Included in every plan</p>
+      <div class="r"></div>
+      <ul class="chk"><li>SEO, GEO, Google Business Profile</li><li>System for reporting and monitoring</li><li>Responses to every review</li></ul>
+    </div>
+    <div class="plan a3">
+      <p class="h3">Growth Plan</p>
+      <p style="font-size:2rem;font-weight:600;color:var(--txt);line-height:1;margin:.1rem 0;">770€<span style="font-size:.88rem;font-weight:400;color:var(--soft);"> / month</span></p>
+      <div class="r"></div>
+      <ul class="chk"><li>Everything in Visibility, plus:</li><li>Social media strategy &amp; content planning</li><li>Graphic design for social</li><li>Community management</li></ul>
+    </div>
+    <div class="plan hi a4" style="position:relative;">
+      <div style="position:absolute;top:-11px;left:1.2rem;"><span class="pill">Recommended</span></div>
+      <p class="h3" style="margin-top:.4rem;">Growth + Comm &amp; Sales</p>
+      <p style="font-size:2rem;font-weight:600;color:var(--terra);line-height:1;margin:.1rem 0;">1,200€<span style="font-size:.88rem;font-weight:400;color:var(--soft);"> / month</span></p>
+      <p class="sm">Setup from 650€</p>
+      <div class="r"></div>
+      <ul class="chk"><li>Everything in the Growth Plan, plus:</li><li>WhatsApp Concierge (24/7 instant replies)</li><li>Social Automation (Instagram DM flows)</li><li>B2B Email Outreach (Hotels, agencies)</li><li>Influencer search &amp; collaboration management</li><li>Human-supervised multilingual communications</li></ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════ 14 WHY KENSHO ════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="a1" style="margin-bottom:1rem;"><h2 class="h2">Not an External Agency.<br>Your Marketing Team.</h2></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem;flex:1;min-height:0;" class="a2">
+    <div class="c" style="display:flex;gap:.8rem;align-items:flex-start;">
+      <div style="width:46px;height:46px;border-radius:50%;border:2px solid var(--terra);background:var(--tl);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div><p class="h3 t" style="margin-bottom:.28rem;">Hospitality Native</p><p class="body">Graduated from Les Roches University, Switzerland. One of the top global hospitality schools.</p></div>
+    </div>
+    <div class="c" style="display:flex;gap:.8rem;align-items:flex-start;">
+      <div style="font-size:1.25rem;flex-shrink:0;color:var(--terra);margin-top:3px;">★★★★★</div>
+      <div><p class="h3 t" style="margin-bottom:.28rem;">Operations Tested</p><p class="body">Years of on-the-ground, 5-star hotel operational experience across Europe and the United States.</p></div>
+    </div>
+    <div class="c" style="display:flex;gap:.8rem;align-items:flex-start;">
+      <div class="ic" style="flex-shrink:0;"><svg width="19" height="19" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg></div>
+      <div><p class="h3 t" style="margin-bottom:.28rem;">Digital Masters</p><p class="body">9 straight years specialized exclusively in digital marketing for the luxury hospitality sector.</p></div>
+    </div>
+    <div class="c" style="display:flex;gap:.8rem;align-items:flex-start;">
+      <div class="ic" style="flex-shrink:0;"><svg width="19" height="19" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div>
+      <div><p class="h3 t" style="margin-bottom:.28rem;">Tech Certified</p><p class="body">Masters in AI and Automation. Multiple Google Certifications.</p></div>
+    </div>
+  </div>
+  <div class="rb a3" style="margin-top:.85rem;">We understand exactly what a concierge needs to recommend a venue, and what a guest expects before booking. We speak hospitality.</div>
+</div>
+
+<!-- ════════════════════════ 15 NEXT STEPS ════════════════════════ -->
+<div class="slide" id="s15" style="align-items:center;justify-content:center;text-align:center;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1.6rem;width:100%;max-width:820px;">
+    <div class="a1">
+      <h2 style="font-size:clamp(2rem,3.8vw,3rem);font-weight:500;letter-spacing:-.022em;color:var(--txt);margin-bottom:.4rem;">August 2026 is closer than it looks.</h2>
+      <p class="body">Every week without a digital presence is a week the competition gains ground.</p>
+    </div>
+    <div class="a2" style="display:flex;align-items:flex-start;gap:0;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.6rem;flex:1;"><div class="sc">1</div><p class="body" style="max-width:175px;font-size:.85rem;">Confirm scope &amp; language priorities (Spanish/Arabic, Training app).</p></div>
+      <div style="flex:1;height:2px;background:var(--terra);opacity:.35;border-radius:2px;margin-top:24px;"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.6rem;flex:1;"><div class="sc">2</div><p class="body" style="max-width:175px;font-size:.85rem;">Execute the Marketing Plan (290€). Both teams get the same strategic picture before any code is written.</p></div>
+      <div style="flex:1;height:2px;background:var(--terra);opacity:.35;border-radius:2px;margin-top:24px;"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.6rem;flex:1;"><div class="sc">3</div><p class="body" style="max-width:175px;font-size:.85rem;">Production, digital real estate setup, and implementation begin immediately.</p></div>
+    </div>
+    <div class="a3">
+      <a href="https://hospitality.kenshovisual.com" target="_blank" style="display:inline-block;background:var(--terra);color:#fff;padding:.88rem 2.1rem;border-radius:9999px;font-size:.97rem;font-weight:500;text-decoration:none;letter-spacing:.02em;box-shadow:0 4px 18px rgba(196,98,45,.34);">
+        hospitality.kenshovisual.com
+      </a>
+    </div>
+  </div>
+</div>
+
+</div><!-- deck -->
+
+<nav id="nav">
+  <button class="nb" id="prev">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nb" id="next">→</button>
+</nav>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+const ctr=document.getElementById('ctr');
+const dotsEl=document.getElementById('dots');
+const total=slides.length;
+let cur=0;
+
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' on':'');
+  d.addEventListener('click',()=>go(i));
+  dotsEl.appendChild(d);
+});
+
+function chrome(i){
+  const dk=slides[i].classList.contains('dk');
+  ctr.style.color=dk?'rgba(255,255,255,.32)':'var(--soft)';
+  document.querySelectorAll('.nb').forEach(b=>{
+    b.style.background=dk?'rgba(255,255,255,.12)':'rgba(255,255,255,.5)';
+    b.style.borderColor=dk?'rgba(255,255,255,.18)':'rgba(255,255,255,.7)';
+    b.style.color=dk?'rgba(255,255,255,.65)':'var(--mid)';
+  });
+  document.querySelectorAll('.dot').forEach((d,j)=>{
+    d.style.background=j===i?'var(--terra)':dk?'rgba(255,255,255,.22)':'rgba(0,0,0,.22)';
+  });
+}
+
+function go(n){
+  slides[cur].classList.remove('on');
+  document.querySelectorAll('.dot')[cur].classList.remove('on');
+  cur=((n%total)+total)%total;
+  slides[cur].classList.add('on');
+  document.querySelectorAll('.dot')[cur].classList.add('on');
+  ctr.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+  chrome(cur);
+  if(cur===1)countUp();
+}
+
+document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+document.getElementById('next').addEventListener('click',()=>go(cur+1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(cur-1);
+});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>45)go(dx<0?cur+1:cur-1);});
+
+function countUp(){
+  document.querySelectorAll('#s2 .sn').forEach(el=>{
+    const v=parseFloat(el.dataset.v),s=el.dataset.s||'';
+    let i=0;const st=36,dur=1000;
+    const iv=setInterval(()=>{
+      i++;const val=v*(i/st);
+      el.textContent=(Number.isInteger(v)?Math.round(val):val.toFixed(1))+s;
+      if(i>=st){el.textContent=v+s;clearInterval(iv);}
+    },dur/st);
+  });
+}
+chrome(0);
+</script>
+</body>
+</html>
