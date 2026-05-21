@@ -1525,10 +1525,29 @@
       height: 100%;
     }
 
+    .training-copy-card.surface-paper {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .training-copy-card .section-title,
+    .training-copy-card .section-title.compact,
+    .training-copy-card .lede,
+    .training-copy-card .label,
+    .training-copy-card .body-copy,
+    .training-copy-card .list-copy {
+      color: var(--paper-strong) !important;
+    }
+
+    .training-copy-card .lede {
+      color: rgba(255, 250, 244, 0.82) !important;
+    }
+
     .app-preview-frame {
       position: absolute;
-      top: 26px;
-      right: 18px;
+      top: 2px;
+      right: 0;
       z-index: 1;
       width: min(43%, 290px);
       aspect-ratio: 10 / 18;
@@ -4353,7 +4372,7 @@
         <div class="investment-grid">
           <div class="reveal" style="--delay: 120ms; text-align: center;">
             <h2 class="section-title compact">Phase 1 investment architecture.</h2>
-            <p class="lede" style="margin-top: 16px;">A clean view of the strategic and developmental setups required to launch with confidence.</p>
+            <p class="lede" style="margin: 16px auto 0; max-width: 44ch; text-align: center;">A clean view of the strategic and developmental setups required to launch with confidence.</p>
             <div class="surface card-pad-lg" style="margin-top: 24px;">
               <p class="label">Framing principle</p>
               <p class="body-copy" style="margin-top: 10px;">Core launch infrastructure is separated from optional expansion layers so the scope stays clear and financially readable.</p>
