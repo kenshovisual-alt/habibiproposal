@@ -2973,6 +2973,18 @@
       }
 
       .chrome::before {
+        left: calc(50% - 50vw);
+        right: calc(50% - 50vw);
+        top: -18px;
+        bottom: calc(-18px - env(safe-area-inset-bottom));
+        border-radius: 0;
+        border: 0;
+        background:
+          linear-gradient(180deg, rgba(12, 16, 19, 0.18) 0%, rgba(12, 16, 19, 0.36) 32%, rgba(12, 16, 19, 0.56) 100%),
+          linear-gradient(180deg, rgba(255, 250, 244, 0.1), rgba(255, 250, 244, 0.04));
+        backdrop-filter: blur(28px) saturate(1.16);
+        -webkit-backdrop-filter: blur(28px) saturate(1.16);
+        box-shadow: 0 -12px 34px rgba(13, 17, 19, 0.08);
         opacity: 1;
       }
 
