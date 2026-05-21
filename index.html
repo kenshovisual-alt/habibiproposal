@@ -1525,10 +1525,11 @@
       height: 100%;
     }
 
-    .training-copy-card.surface-paper {
-      background: transparent;
-      border: 0;
-      box-shadow: none;
+    .scene.theme-dark .training-copy-card.surface-paper {
+      background: transparent !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      color: var(--paper-strong);
     }
 
     .training-copy-card .section-title,
@@ -1546,8 +1547,8 @@
 
     .app-preview-frame {
       position: absolute;
-      top: 2px;
-      right: 0;
+      top: -12px;
+      right: -14px;
       z-index: 1;
       width: min(43%, 290px);
       aspect-ratio: 10 / 18;
